@@ -7,7 +7,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [imageQuality, setImageQuality] = useState(0.7);
-  const [imageDimensions, setImageDimensions] = useState(800); 
+  const [imageDimensions, setImageDimensions] = useState(800);
 
   const compressImage = useCallback((imgSrc, quality, maxWidth) => {
     return new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ function App() {
         reject(new Error("Failed to load image for compression."));
       };
     });
-  }, []); 
+  }, []);
 
   useEffect(() => {
     const processImage = async () => {
@@ -56,7 +56,7 @@ function App() {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const url = e.target.result;
-        setOriginalImageUrl(url); 
+        setOriginalImageUrl(url);
 
         try {
           const compressedUrl = await compressImage(url, imageQuality, imageDimensions);
@@ -78,10 +78,10 @@ function App() {
     };
 
     processImage();
-  }, [originalFile, imageQuality, imageDimensions, compressImage]); 
+  }, [originalFile, imageQuality, imageDimensions, compressImage]);
 
   const handleImageUpload = useCallback((event) => {
-    const file = event.target.files[0]; 
+    const file = event.target.files[0];
 
     if (!file) {
       setError("Please select an image file.");
@@ -96,8 +96,8 @@ function App() {
     }
 
     setError(null);
-    setOriginalFile(file); 
-    event.target.value = null; 
+    setOriginalFile(file);
+    event.target.value = null;
   }, []);
 
   const handleDownloadCompressed = useCallback(() => {
@@ -121,15 +121,15 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans">
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="min-h-screen dark:bg-[#1E201E] bg-gray-100 flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans">
+      <div className="dark:bg-[#3C3D37] bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl">
+        <h1 className="text-3xl font-bold text-center dark:text-[#ECDFCC] text-gray-800 mb-6">
           Image Compressor
         </h1>
 
         {/* File input section */}
         <div className="mb-6 flex flex-col items-center">
-          <label htmlFor="image-upload" className="cursor-pointer text-white border p-2 rounded-xl bg-black/70 hover:bg-black block text-lg font-medium mb-2">
+          <label htmlFor="image-upload" className="cursor-pointer text-white border p-2 rounded-xl dark:bg-[#ECDFCC] dark:text-[#1E201E] bg-black/70 dark:hover:bg-[#ECDFCC]/80 hover:bg-black block text-lg font-medium mb-2">
             Upload an Image
           </label>
           <input
@@ -163,7 +163,7 @@ function App() {
                 style={{ maxHeight: '400px', objectFit: 'contain' }}
               />
             ) : (
-              <div className="w-full max-w-[400px] h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+              <div className="w-full max-w-[400px] h-64 dark:bg-[#697565] bg-gray-50 rounded-lg flex items-center justify-center dark:text-white text-gray-500">
                 No original image uploaded
               </div>
             )}
@@ -190,7 +190,7 @@ function App() {
                 </p>
               </>
             ) : (
-              <div className="w-full max-w-[400px] h-64 bg-gray-200 rounded-lg flex items-center justify-center text-gray-500">
+              <div className="w-full max-w-[400px] h-64 dark:bg-[#697565] bg-gray-50 rounded-lg flex items-center justify-center dark:text-white text-gray-500">
                 No compressed image available
               </div>
             )}
@@ -198,15 +198,15 @@ function App() {
         </div>
 
         <div className="w-full rounded-lg flex flex-col items-center mt-10">
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             {/* Quality Selection */}
             <div className="flex items-center gap-2">
-              <label htmlFor="quality-select" className="text-gray-700 font-medium">Quality:</label>
+              <label htmlFor="quality-select" className="dark:text-white text-gray-700 font-medium">Quality:</label>
               <select
                 id="quality-select"
                 value={imageQuality}
                 onChange={handleQualityChange}
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="p-2 border dark:bg-amber-50 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value={1.0}>100%</option>
                 <option value={0.9}>90%</option>
@@ -222,12 +222,12 @@ function App() {
             </div>
             {/* Dimensions Selection */}
             <div className="flex items-center gap-2 mt-2 sm:mt-0">
-              <label htmlFor="dimensions-select" className="text-gray-700 font-medium">Width:</label>
+              <label htmlFor="dimensions-select" className="dark:text-white text-gray-700 font-medium">Width:</label>
               <select
                 id="dimensions-select"
                 value={imageDimensions}
                 onChange={handleDimensionsChange}
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="p-2 border dark:bg-amber-50 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value={400}>400px</option>
                 <option value={800}>800px (Default)</option>
@@ -237,16 +237,15 @@ function App() {
               </select>
             </div>
           </div>
-
-        </div>
-        <div className="w-full flex justify-center">
-          <button
-            onClick={handleDownloadCompressed}
-            className="mt-3 px-6 py-3 bg-green-600 text-white font-semibold rounded-full shadow-md
+          <div className="w-full flex justify-center">
+            <button
+              onClick={handleDownloadCompressed}
+              className="mt-3 px-6 py-3 bg-green-600 text-white font-semibold rounded-full shadow-md
                                 hover:bg-green-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-          >
-            Download Compressed Image
-          </button>
+            >
+              Download Compressed Image
+            </button>
+          </div>
         </div>
       </div>
     </div>
